@@ -245,6 +245,7 @@
     </footer>
     
     <script>
+        
         $(document).ready(function(){
             var number = $('#nombre_appareil').val();
 
@@ -263,7 +264,6 @@
               }
             });
           });
-
         $(document).on('click', '#addAppliance', function () {
     var number = $('#added_appliances').children().length + 1;
     // var number_a = $('#form_appliances').children().length + 1;
@@ -322,7 +322,23 @@
     
         
     }
-    
+
+        var number = $('#nombre_appareil').val();
+
+        $(`#appareil-${number}`).change(function(){
+          var applianceId = $(this).val();
+          if(applianceId) {
+            $.ajax({
+              url: '/get_appliance_power/' + applianceId + '/',
+              type: 'GET',
+              success: function(data) {
+                $(`#power-${number}`).val(data.power);
+              }
+            });
+          } else {
+        $(`#power-${number}`).val('');
+          }
+        });
     
     
     })  ;  
