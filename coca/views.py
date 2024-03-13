@@ -155,9 +155,12 @@ def Contact(request):
 class InfoUserView(View):
     
     def get(self, request, *args, **kwargs):
+        email = kwargs['email']
+        context={
+            'email':email
+        }
         
-        
-        return render(request, 'coca/form_user.html')
+        return render(request, 'coca/form_user.html', context)
 
     def post(self, request, *args, **kwargs):
         email = kwargs['email']
@@ -186,7 +189,7 @@ class InfoUserView(View):
 
         print(user)
         
-        return redirect(reverse('appliances_coca'))
+        return redirect(reverse('appliances'))
     
 class GetCoastView(View):
     def get(self, request, pk, *args, **kwargs):
