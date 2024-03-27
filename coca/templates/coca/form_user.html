@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/style.css' %}">
+    <link rel="stylesheet" href="bootstrap/css/style.css">
     <title>SMARTSANA | COST CALCULATOR</title>
 </head>
 <body>
@@ -14,10 +13,8 @@
         <div class="row border rounded-5 p-3 bg-white shadow box-area">
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #a4b5e9;">
                 <div class="featured-image mb-3">
-                    <img src="{% static 'images/logo.png' %}" class="img-fluid" style="width: 250px;">
+                    <img src="images/logo.png" class="img-fluid" style="width: 250px;">
                 </div>
-                <!-- <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">Be Verified</p>
-                <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join experienced Designers on this platform.</small> -->
             </div> 
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
@@ -26,32 +23,125 @@
                         <!-- <h2>Hello,Again</h2> -->
                         <p>&#x2190; User info</p>
                     </div>
-                    <form method = "POST">
-                        {% csrf_token %}
-                        <div class="input-group mb-4">
-                            <input type="text"  name="nom" class="form-control form-control-lg bg-light fs-6" placeholder="First Name">
-                        </div>
-                        <div class="input-group mb-4">
-                            <input type="text" name="prenom" class="form-control form-control-lg bg-light fs-6" placeholder="Last Name">
-                        </div>
-                        <div class="input-group mb-4">
-                            <input type="email" name="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address"  disabled value= {{email}} >
-                        </div>
-                        <div class="input-group mb-4">
-                            <div class="col me-2">
-                                <input type="text" name="addres" class="form-control form-control-lg bg-light fs-6" placeholder="Adress">
+                    <form action="">
+                        <div id="first-set">
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="First Name">
                             </div>
-                            <div class="col ms-2">
-                                <input type="text" name="telephone" class="form-control form-control-lg bg-light fs-6" placeholder="Phone">
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Last Name">
+                            </div>
+                            <div class="input-group mb-4">
+                                <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address">
+                            </div>
+                            <div class="input-group mb-4">
+                                <div class="col me-2">
+                                    <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Adress">
+                                </div>
+                                <div class="col ms-2">
+                                    <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Phone">
+                                </div>
+                            </div>
+                            <div class="input-group mt-4 mb-3">
+                                <button id="next-btn" class="btn btn-lg btn-primary w-100 fs-6" style="background: #a4b5e9; border-color: #a4b5e9;">Next &#8594;</button>
                             </div>
                         </div>
-                        <div class="input-group mt-4 mb-3">
-                            <button type="submit" class="btn btn-lg btn-primary w-100 fs-6" style="background: #a4b5e9; border-color: #a4b5e9;">Register Informations</button>
+
+                        <div id="next-set" style="display: none;">
+                            <div class="input-group mb-4">
+                                <select id="country-select" class="form-control form-control-lg bg-light fs-6">
+                                    <!-- Country options will be populated dynamically -->
+                                </select>
+                            </div>
+                    
+                            <div class="input-group mb-4">
+                                <select class="form-select input-group" aria-label="Default select example">
+                                    <option disabled selected>Choose your Region</option>
+                                    <option value="1">Adamawa</option>
+                                    <option value="2">Centre</option>
+                                    <option value="3">East</option>
+                                    <option value="4">Far North</option>
+                                    <option value="5">Littoral</option>
+                                    <option value="6">North</option>
+                                    <option value="7">Northwest</option>
+                                    <option value="8">South</option>
+                                    <option value="9">Southwest</option>
+                                    <option value="10">West</option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Enter your town">
+                            </div>
+                            <div class="input-group mt-4 mb-3">
+                                <button class="btn btn-lg btn-primary w-100 fs-6" style="background: #a4b5e9; border-color: #a4b5e9;">Register Informations</button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div> 
         </div>
     </div>
+
+    <script>
+        document.getElementById('next-btn').addEventListener('click', function(event) {
+            event.preventDefault();
+            // Hide current inputs
+            document.getElementById('first-set').style.display = 'none';
+            
+            // Show the next set of inputs
+            document.getElementById('next-set').style.display = 'block';
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get reference to the select element
+            const countrySelect = document.getElementById('country-select');
+            
+            // Fetch country data
+            fetch('https://restcountries.com/v3.1/all')
+                .then(response => response.json())
+                .then(data => {
+                    // Sort countries alphabetically
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    
+                    // Populate the select element with country options
+                    data.forEach(country => {
+                        const option = document.createElement('option');
+                        option.value = country.name.common;
+                        option.textContent = `${country.flags ? country.flags.emoji : ''} ${country.name.common}`;
+                        countrySelect.appendChild(option);
+                    });
+                    
+                    // Automatically select the user's country if possible
+                    if ("geolocation" in navigator) {
+                        navigator.geolocation.getCurrentPosition(position => {
+                            const { latitude, longitude } = position.coords;
+                            fetch(`https://geocode.xyz/${latitude},${longitude}?json=1`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const userCountry = data.country;
+                                    if (userCountry) {
+                                        countrySelect.value = userCountry;
+                                    }
+                                })
+                                .catch(error => console.error('Error fetching user location:', error));
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching countries:', error));
+        });
+
+        document.getElementById('next-btn').addEventListener('click', function(event) {
+            // Prevent form submission
+            event.preventDefault();
+
+            // Get the selected country
+            const selectedCountry = document.getElementById('country-select').value;
+            console.log('Selected country:', selectedCountry);
+            // You can perform further actions here
+        });
+    </script>
+
 </body>
 </html>
