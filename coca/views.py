@@ -160,7 +160,7 @@ class InfoUserView(View):
             'email':email
         }
         
-        return render(request, 'coca/form_user.html', context)
+        return render(request, 'coca/register.html', context)
 
     def post(self, request, *args, **kwargs):
         email = kwargs['email']
@@ -168,10 +168,11 @@ class InfoUserView(View):
         nom = request.POST.get("nom")
         prenom = request.POST.get("prenom")
         addres = request.POST.get("addres")
-        
         telephone = request.POST.get("telephone")
         
-        
+        country = request.POST.get("country")
+        region = request.POST.get("region")
+        town = request.POST.get("town")
         user = User.objects.create_user(username=email, password=email)
         data = {
             'nom': nom,
@@ -179,6 +180,9 @@ class InfoUserView(View):
             'email':email,
             'addres':addres,
             'telephone':telephone,
+            'country': country,
+            'region':region,
+            'town':town,
             'user':user,
 
         }
@@ -214,3 +218,9 @@ class GetCoastView(View):
 def get_appliance_power(request, appliance_id):
     appliance = Appareil.objects.get(pk=appliance_id)
     return JsonResponse({'power': appliance.power})
+class RoleView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'coca/role.html')
+
+    def post(self, request, *args, **kwargs):
+        return HttpResponse('POST request!')

@@ -13,6 +13,7 @@ urlpatterns = [
     path('from/', views.FromView, name="from"),
     path('Apropos/', views.Apropos, name="apropos"),
     path('Contact/', views.Contact, name="contact"),
+    path('role/', views.RoleView.as_view(), name="role"),
     path('checkuser/', views.checkUserView.as_view(), name="check_user"),
     path('get_appliance_power/<int:appliance_id>/', views.get_appliance_power, name='get_appliance_power'),
 

@@ -8,11 +8,15 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class InformationsInternaute(models.Model):
-    nom = models.CharField(max_length=100)
-    prenom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=50)
+    prenom = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
     addres = models.CharField(max_length=50)
-    telephone = models.CharField(max_length=20)
+    telephone = models.CharField(max_length=50)
+    country = models.CharField(max_length=50, blank=True, null = True)
+    region = models.CharField(max_length=50, blank=True, null = True)
+    town = models.CharField(max_length=50, blank=True, null = True)
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="internaute")
 
     # Ajoutez d'autres champs au besoin
